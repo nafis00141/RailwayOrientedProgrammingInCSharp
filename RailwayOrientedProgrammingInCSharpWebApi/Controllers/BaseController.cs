@@ -9,7 +9,7 @@ namespace RailwayOrientedProgrammingInCSharp.Controllers
   {
     protected IActionResult CustomBadRequest(ErrorType errorType) =>
       errorType
-      .ErrorTypesToErrorMessage()
+      .ToErrorString()
       .Then(GenericResponse.CreateGenericResponse)
       .Then(BadRequest);
   }

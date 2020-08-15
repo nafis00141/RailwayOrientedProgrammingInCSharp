@@ -19,7 +19,7 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       _emailService = new EmailService();
       _userQuery = new UserQuery();
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "New", Email = "new@example.com" }).Match(x=> x.Message, x=> x.ErrorTypesToErrorMessage());
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "New", Email = "new@example.com" }).Match(x=> x.Message, x=> x.ToErrorString());
       Assert.Equal("User Updated Successfully", result);
     }
 
@@ -29,8 +29,8 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       _emailService = new EmailService();
       _userQuery = new UserQuery();
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 4, Name = "New", Email = "new@example.com" }).Match(x => x.Message, x => x.ErrorTypesToErrorMessage());
-      Assert.Equal(ErrorType.UserNotFound.ErrorTypesToErrorMessage(), result);
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 4, Name = "New", Email = "new@example.com" }).Match(x => x.Message, x => x.ToErrorString());
+      Assert.Equal(ErrorType.UserNotFound.ToErrorString(), result);
     }
 
     [Fact]
@@ -39,8 +39,8 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       _emailService = new EmailService();
       _userQuery = new UserQuery();
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "", Email = "new@example.com" }).Match(x => x.Message, x => x.ErrorTypesToErrorMessage());
-      Assert.Equal(ErrorType.NameCanNotBeBlank.ErrorTypesToErrorMessage(), result);
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "", Email = "new@example.com" }).Match(x => x.Message, x => x.ToErrorString());
+      Assert.Equal(ErrorType.NameCanNotBeBlank.ToErrorString(), result);
     }
 
     [Fact]
@@ -49,8 +49,8 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       _emailService = new EmailService();
       _userQuery = new UserQuery();
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "" }).Match(x => x.Message, x => x.ErrorTypesToErrorMessage());
-      Assert.Equal(ErrorType.EmailCanNotBeBlank.ErrorTypesToErrorMessage(), result);
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "" }).Match(x => x.Message, x => x.ToErrorString());
+      Assert.Equal(ErrorType.EmailCanNotBeBlank.ToErrorString(), result);
     }
 
     [Fact]
@@ -59,8 +59,8 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       _emailService = new EmailService();
       _userQuery = new UserQuery();
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "nafisislam" }).Match(x => x.Message, x => x.ErrorTypesToErrorMessage());
-      Assert.Equal(ErrorType.EmailNotValid.ErrorTypesToErrorMessage(), result);
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "nafisislam" }).Match(x => x.Message, x => x.ToErrorString());
+      Assert.Equal(ErrorType.EmailNotValid.ToErrorString(), result);
     }
 
     [Fact]
@@ -71,8 +71,8 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       A.CallTo(() => _userQuery.GetUser(1)).Returns(new User() { Id = 1, Name = "Nafis Islam", Email = "nafis@example.com", Password = "12345" });
       A.CallTo(() => _userQuery.UpdateUser(A<User>.Ignored)).Returns(false);
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "nafis@example.com" }).Match(x => x.Message, x => x.ErrorTypesToErrorMessage());
-      Assert.Equal(ErrorType.DatabaseUpdateError.ErrorTypesToErrorMessage(), result);
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "nafis@example.com" }).Match(x => x.Message, x => x.ToErrorString());
+      Assert.Equal(ErrorType.DatabaseUpdateError.ToErrorString(), result);
     }
 
     [Fact]
@@ -84,8 +84,8 @@ namespace RailwayOrientedProgrammingInCSharpSpecs.ServiceSpecs
       _userQuery = new UserQuery();
      
       _userService = new UserService(_userQuery, _emailService);
-      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "nafis@example.com" }).Match(x => x.Message, x => x.ErrorTypesToErrorMessage());
-      Assert.Equal(ErrorType.EmailNotSend.ErrorTypesToErrorMessage(), result);
+      var result = _userService.UpdateUser(new UpdateUserDto { UserId = 1, Name = "Nafi", Email = "nafis@example.com" }).Match(x => x.Message, x => x.ToErrorString());
+      Assert.Equal(ErrorType.EmailNotSend.ToErrorString(), result);
     }
   }
 }
